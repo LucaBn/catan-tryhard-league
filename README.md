@@ -22,9 +22,15 @@ Game data is stored in a Google Sheet and published as CSV.
 Example format:
 
 ```
-date,player,points
-2026-01-01,Luca,10
-2026-01-01,Marco,8
+date,game,player,points
+2026-01-01,1,Luca,10
+2026-01-01,1,Marco,8
+2026-01-01,1,Giovanni,7
+2026-01-01,1,Matteo,5
+2026-01-01,2,Luca,6
+2026-01-01,2,Marco,10
+2026-01-01,2,Giovanni,7
+2026-01-01,2,Matteo,7
 ```
 
 Update the sheet → refresh the site → instant new arguments.
@@ -63,7 +69,6 @@ src/hooks/useSheetsData.js
 Designed to be deployed on Cloudflare Pages:
 
 - Build command: `npm run build`
-
 - Output directory: `dist`
 
 ## 📜 License
