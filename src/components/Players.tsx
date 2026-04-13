@@ -1,4 +1,4 @@
-import { Grid, Title } from "@mantine/core";
+import { SimpleGrid, Title } from "@mantine/core";
 
 import { GameRecord } from "@/types";
 
@@ -17,13 +17,11 @@ export default function Players({ data }: Props) {
         🤓 Players
       </Title>
 
-      <Grid>
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="md">
         {players.map((p) => (
-          <Grid.Col key={p} span={4}>
-            <PlayerCard player={p} data={data} />
-          </Grid.Col>
+          <PlayerCard key={p} player={p} data={data} />
         ))}
-      </Grid>
+      </SimpleGrid>
     </>
   );
 }
