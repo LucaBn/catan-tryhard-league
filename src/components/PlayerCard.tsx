@@ -1,4 +1,4 @@
-import { Card, Text, Badge } from "@mantine/core";
+import { Card, Text, Badge, Avatar, Group, Stack } from "@mantine/core";
 import { GameRecord } from "../types";
 
 type Props = {
@@ -12,18 +12,30 @@ export default function PlayerCard({ player, data }: Props) {
   const total = games.reduce((sum, g) => sum + g.points, 0);
   const avg = games.length ? (total / games.length).toFixed(2) : "0";
 
+  const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${player}`;
+
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder>
-      <Text fw={700} size="lg">
-        {player}
-      </Text>
+      <Group align="center" gap="md">
+        <Avatar src={avatarUrl} radius="xl" size="lg" />
 
-      <Text size="sm">Games: {games.length}</Text>
-      <Text size="sm">Average: {avg}</Text>
+        <Stack gap={0}>
+          <Text fw={700} size="lg">
+            {player}
+          </Text>
 
-      <Badge mt="sm" color="blue">
-        {total} points
-      </Badge>
+          <Text size="xs" c="dimmed">
+            Description about {player} goes here. Maybe their playstyle or
+            favorite strategies. This is just placeholder text for now.
+          </Text>
+        </Stack>
+
+        <Group gap="xs">
+          <Badge variant="light">Games: {games.length}</Badge>
+          <Badge variant="light">Avg: {avg}</Badge>
+          <Badge color="blue">{total} pts</Badge>
+        </Group>
+      </Group>
     </Card>
   );
 }
