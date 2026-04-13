@@ -6,6 +6,7 @@ import App from "./App";
 import "@mantine/core/styles.css";
 import "@mantine/charts/styles.css";
 
+// eslint-disable-next-line react-refresh/only-export-components
 function Root() {
   const colorSchemeManager = localStorageColorSchemeManager();
 

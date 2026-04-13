@@ -14,7 +14,7 @@ export default function Players({ data }: Props) {
   return (
     <>
       <Title order={3} mt="xl" mb="sm">
-        Players
+        🤓 Players
       </Title>
 
       <Grid>

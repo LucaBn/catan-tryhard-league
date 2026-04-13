@@ -1,11 +1,9 @@
-import { Anchor, Container, Divider, Group, Text } from "@mantine/core";
+import { Anchor, Container, Group, Text } from "@mantine/core";
 import { IconBrandGithub } from "@tabler/icons-react";
 
 export default function Footer() {
   return (
-    <Container size="lg" mt="xl">
-      <Divider my="md" />
-
+    <Container size="lg">
       <Group justify="space-between" py="md">
         <Text size="sm" c="dimmed">
           Created with <span style={{ color: "red" }}>♥</span> by Luca
@@ -15,6 +13,7 @@ export default function Footer() {
           href="https://github.com/LucaBn/catan-tryhard-league"
           target="_blank"
           size="sm"
+          rel="noopener noreferrer nofollow"
         >
           <Group gap={6}>
             <IconBrandGithub size={16} />

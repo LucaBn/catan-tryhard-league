@@ -73,26 +73,26 @@ export default function Leaderboard({ data }: Props) {
         🏆 Leaderboard
       </Title>
 
-      <Table striped highlightOnHover mb={24}>
-        <thead>
-          <tr style={{ textAlign: "left" }}>
-            <th>Player</th>
-            <th>Games</th>
-            <th>Total Points</th>
-            <th>Wins 👑</th>
-          </tr>
-        </thead>
+      <Table striped withRowBorders={false} highlightOnHover mb={24}>
+        <Table.Thead>
+          <Table.Tr style={{ textAlign: "left" }}>
+            <Table.Th>Player</Table.Th>
+            <Table.Th>Games</Table.Th>
+            <Table.Th>Total Points</Table.Th>
+            <Table.Th>Wins 👑</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
 
-        <tbody>
+        <Table.Tbody>
           {sorted.map((p) => (
-            <tr key={p.player}>
-              <td>{p.player}</td>
-              <td>{p.games}</td>
-              <td>{p.totalPoints}</td>
-              <td>{p.wins}</td>
-            </tr>
+            <Table.Tr key={p.player}>
+              <Table.Td>{p.player}</Table.Td>
+              <Table.Td>{p.games}</Table.Td>
+              <Table.Td>{p.totalPoints}</Table.Td>
+              <Table.Td>{p.wins}</Table.Td>
+            </Table.Tr>
           ))}
-        </tbody>
+        </Table.Tbody>
       </Table>
 
       <Flex gap="xl" justify="center" wrap="wrap">
