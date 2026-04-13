@@ -1,18 +1,13 @@
 export const getColorFromPlayerName = (name: string) => {
-  const colors = [
-    "#FF6384",
-    "#36A2EB",
-    "#FFCE56",
-    "#4BC0C0",
-    "#9966FF",
-    "#FF9F40",
-  ];
+  const colorMap: Record<string, string> = {
+    Bono: "#FF6384",
+    Bas: "#36A2EB",
+    David: "#FFCE56",
+    Fra: "#4BC0C0",
+    Frullo: "#9966FF",
+    Sara: "#FF9F40",
+    Luca: "#F44336",
+  };
 
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  const index = Math.abs(hash) % colors.length;
-  return colors[index];
+  return colorMap[name] ?? "#9AA0A6";
 };

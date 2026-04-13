@@ -1,7 +1,8 @@
-import { Table, Paper, Title, Text, Flex } from "@mantine/core";
-import { PieChart } from "@mantine/charts";
+import { Table, Paper, Title, Flex } from "@mantine/core";
 import { GameRecord } from "@/types";
 import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
+import ScoreProgressChart from "@/components/ScoreProgressChart";
+import { ScorePieCharts } from "@/components/ScorePieCharts";
 
 type Props = {
   data: GameRecord[];
@@ -94,28 +95,11 @@ export default function Leaderboard({ data }: Props) {
       </Table>
 
       <Flex gap="xl" justify="center" wrap="wrap">
-        <Flex gap="xs" direction="column">
-          <Text fz="xs" ta="center">
-            Total points
-          </Text>
-          <PieChart
-            data={pointsData}
-            withTooltip
-            withLabels
-            labelsPosition="inside"
-          />
-        </Flex>
-        <Flex gap="xs" direction="column">
-          <Text fz="xs" ta="center">
-            Total wins
-          </Text>
-          <PieChart
-            data={winsData}
-            withTooltip
-            withLabels
-            labelsPosition="inside"
-          />
-        </Flex>
+        <ScorePieCharts pointsData={pointsData} winsData={winsData} />
+      </Flex>
+
+      <Flex>
+        <ScoreProgressChart data={data} />
       </Flex>
     </Paper>
   );
