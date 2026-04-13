@@ -1,5 +1,7 @@
-import { Title, Grid } from "@mantine/core";
+import { Grid, Title } from "@mantine/core";
+
 import { GameRecord } from "@/types";
+
 import PlayerCard from "./PlayerCard";
 
 type Props = {

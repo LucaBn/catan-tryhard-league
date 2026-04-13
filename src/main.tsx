@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { localStorageColorSchemeManager, MantineProvider } from "@mantine/core";
+
 import App from "./App";
 
 import "@mantine/core/styles.css";

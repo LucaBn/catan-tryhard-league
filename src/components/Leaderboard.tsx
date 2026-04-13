@@ -1,8 +1,9 @@
-import { Table, Paper, Title, Flex } from "@mantine/core";
+import { Flex, Paper, Table, Title } from "@mantine/core";
+
+import { ScorePieCharts } from "@/components/ScorePieCharts";
+import ScoreProgressChart from "@/components/ScoreProgressChart";
 import { GameRecord } from "@/types";
 import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
-import ScoreProgressChart from "@/components/ScoreProgressChart";
-import { ScorePieCharts } from "@/components/ScorePieCharts";
 
 type Props = {
   data: GameRecord[];

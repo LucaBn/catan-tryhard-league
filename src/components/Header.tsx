@@ -1,8 +1,8 @@
 import {
-  Title,
   Group,
-  Tooltip,
   Switch,
+  Title,
+  Tooltip,
   useMantineColorScheme,
 } from "@mantine/core";
 import { IconMoon, IconSun } from "@tabler/icons-react";

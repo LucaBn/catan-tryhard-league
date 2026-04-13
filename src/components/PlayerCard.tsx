@@ -1,4 +1,5 @@
-import { Card, Text, Badge, Avatar, Group, Stack } from "@mantine/core";
+import { Avatar, Badge, Card, Group, Stack, Text } from "@mantine/core";
+
 import { GameRecord } from "../types";
 
 type Props = {

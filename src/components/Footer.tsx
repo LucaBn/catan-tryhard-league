@@ -1,4 +1,4 @@
-import { Group, Text, Anchor, Container, Divider } from "@mantine/core";
+import { Anchor, Container, Divider, Group, Text } from "@mantine/core";
 import { IconBrandGithub } from "@tabler/icons-react";
 
 export default function Footer() {

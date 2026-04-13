@@ -1,4 +1,5 @@
 import { LineChart } from "@mantine/charts";
+
 import { GameRecord } from "@/types";
 import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
 
