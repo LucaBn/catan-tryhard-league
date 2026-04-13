@@ -1,4 +1,5 @@
 import {
+  Box,
   Group,
   Switch,
   Title,
@@ -12,10 +13,22 @@ export default function Header() {
   const isThemeSwitchChecked = colorScheme === "dark";
 
   return (
-    <Group justify="space-between" m="md" align="center">
-      <Title>🏝️ Catan Stats</Title>
+    <Box
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100dvw",
+        zIndex: 1000,
+        backdropFilter: "blur(8px)",
+        backgroundColor:
+          colorScheme === "dark" ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.8)",
+        borderBottom: "1px solid rgba(0,0,0,0.1)",
+      }}
+    >
+      <Group justify="space-between" px="md" py="sm" align="center">
+        <Title order={3}>🏝️ Catan Stats</Title>
 
-      <Group>
         <Tooltip label="Toggle theme">
           <Switch
             size="md"
@@ -27,6 +40,6 @@ export default function Header() {
           />
         </Tooltip>
       </Group>
-    </Group>
+    </Box>
   );
 }

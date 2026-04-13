@@ -19,10 +19,8 @@ export default function App() {
   }
 
   return (
-    <Container size="lg">
+    <Container size="lg" pt={70}>
       <Header />
-
-      <Divider my="md" />
 
       <Flex gap={16} direction="column">
         <Leaderboard data={data} />
