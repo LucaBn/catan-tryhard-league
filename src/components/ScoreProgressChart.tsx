@@ -7,11 +7,10 @@ type Props = {
   data: GameRecord[];
 };
 
-export default function ScoreProgressChart({ data }: Props) {
+export default function ChampionshipRaceChart({ data }: Props) {
   const sorted = [...data].sort((a, b) => a.game - b.game);
 
   const players = [...new Set(sorted.map((d) => d.player))];
-
   const games = [...new Set(sorted.map((d) => d.game))].sort((a, b) => a - b);
 
   const gamePoints: Record<number, Record<string, number>> = {};
@@ -28,7 +27,6 @@ export default function ScoreProgressChart({ data }: Props) {
   });
 
   const cumulative: Record<string, number> = {};
-
   players.forEach((p) => (cumulative[p] = 0));
 
   const chartData = games.map((game) => {
@@ -44,12 +42,20 @@ export default function ScoreProgressChart({ data }: Props) {
 
   return (
     <LineChart
-      h={350}
+      h={420}
       data={chartData}
       dataKey="game"
       withLegend
-      curveType="linear"
       withDots
+      curveType="linear"
+      withTooltip
+      strokeWidth={3}
+      dotProps={{
+        r: 3,
+      }}
+      activeDotProps={{
+        r: 6,
+      }}
       series={players.map((p) => ({
         name: p,
         color: getColorFromPlayerName(p),

@@ -39,8 +39,12 @@ export default function PlayerCard({ player, data }: Props) {
 
         <Group gap="xs">
           <Badge variant="light">Games: {games.length}</Badge>
-          <Badge variant="light">👑: {wins}</Badge>
-          <Badge variant="light">Avg: {avg}</Badge>
+          <Badge variant="light">Wins 👑: {wins}</Badge>
+          <Badge variant="light">
+            Win rate:{" "}
+            {games.length ? ((wins / games.length) * 100).toFixed(0) : "0"}%
+          </Badge>
+          <Badge variant="light">Avg points: {avg}</Badge>
           <Badge color={color}>{total} pts</Badge>
         </Group>
       </Group>

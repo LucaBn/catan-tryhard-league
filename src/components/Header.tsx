@@ -18,7 +18,7 @@ export default function Header() {
         position: "fixed",
         top: 0,
         left: 0,
-        width: "100dvw",
+        width: "100%",
         zIndex: 1000,
         backdropFilter: "blur(8px)",
         backgroundColor:
@@ -27,7 +27,7 @@ export default function Header() {
       }}
     >
       <Group justify="space-between" px="md" py="sm" align="center">
-        <Title order={3}>🏝️ Catan Stats</Title>
+        <Title order={3}>🏝️ Catan Tryhard League</Title>
 
         <Tooltip label="Toggle theme">
           <Switch

@@ -14,6 +14,9 @@ function Root() {
     <MantineProvider
       defaultColorScheme="light"
       colorSchemeManager={colorSchemeManager}
+      theme={{
+        fontFamily: "Roboto, sans-serif",
+      }}
     >
       <App />
     </MantineProvider>

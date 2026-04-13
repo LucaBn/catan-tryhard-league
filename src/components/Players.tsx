@@ -40,6 +40,8 @@ export default function Players({ data }: Props) {
     return Object.values(map).map((p) => ({
       ...p,
       avg: p.games ? p.total / p.games : 0,
+      wins: p.total >= 10 ? 1 : 0,
+      winRate: p.games ? (p.total >= 10 ? 1 : 0) / p.games : 0,
     }));
   }, [data]);
 
@@ -65,7 +67,7 @@ export default function Players({ data }: Props) {
       </Title>
 
       <Group gap={2}>
-        <Text>Sort by:</Text>
+        <Text me={8}>Sort by:</Text>
         <Group justify="flex-start" wrap="wrap" gap={8}>
           <Select
             w="40%"
@@ -74,7 +76,9 @@ export default function Players({ data }: Props) {
             onChange={setSortBy}
             data={[
               { value: "total", label: "Total points" },
-              { value: "avg", label: "Average" },
+              { value: "wins", label: "Wins" },
+              { value: "winRate", label: "Win Rate" },
+              { value: "avg", label: "Average points" },
               { value: "games", label: "Games" },
             ]}
           />
