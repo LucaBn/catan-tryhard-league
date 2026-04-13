@@ -1,0 +1,21 @@
+import ReactDOM from "react-dom/client";
+import { localStorageColorSchemeManager, MantineProvider } from "@mantine/core";
+import App from "./App";
+
+import "@mantine/core/styles.css";
+import "@mantine/charts/styles.css";
+
+function Root() {
+  const colorSchemeManager = localStorageColorSchemeManager();
+
+  return (
+    <MantineProvider
+      defaultColorScheme="light"
+      colorSchemeManager={colorSchemeManager}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")!).render(<Root />);

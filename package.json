@@ -1,0 +1,39 @@
+{
+  "name": "catan-tryhard-league",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "licenses": "license-checker --markdown > THIRD_PARTY_LICENSES.md"
+  },
+  "dependencies": {
+    "@mantine/charts": "^9.0.2",
+    "@mantine/core": "^9.0.2",
+    "@mantine/hooks": "^9.0.2",
+    "@tabler/icons-react": "^3.41.1",
+    "axios": "^1.15.0",
+    "dayjs": "^1.11.20",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.30",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "@vitejs/plugin-react-swc": "^3.11.0",
+    "eslint": "^9.39.3",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "license-checker": "^25.0.1",
+    "sass": "^1.89.2",
+    "typescript": "^5.7.3",
+    "vite": "^7.1.12"
+  }
+}
