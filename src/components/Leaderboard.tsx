@@ -67,6 +67,10 @@ export default function Leaderboard({ data }: Props) {
       color: getColorFromPlayerName(p.player),
     }));
 
+  {
+    /* TODO: Add sort by stats */
+  }
+
   return (
     <Paper p="md" shadow="sm" radius="md">
       <Title order={3} mb="md">
