@@ -1,5 +1,7 @@
 import { Avatar, Badge, Card, Group, Stack, Text } from "@mantine/core";
 
+import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
+
 import { GameRecord } from "../types";
 
 type Props = {
@@ -13,28 +15,31 @@ export default function PlayerCard({ player, data }: Props) {
   const total = games.reduce((sum, g) => sum + g.points, 0);
   const avg = games.length ? (total / games.length).toFixed(2) : "0";
 
-  const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${player}`;
+  const initial = player.charAt(0).toUpperCase();
+  const color = getColorFromPlayerName(player);
 
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder>
       <Group align="center" gap="md">
-        <Avatar src={avatarUrl} radius="xl" size="lg" />
+        <Avatar radius="xl" size="lg" color={color}>
+          {initial}
+        </Avatar>
 
-        <Stack gap={0}>
+        <Stack gap={0} style={{ flex: 1 }}>
           <Text fw={700} size="lg">
             {player}
           </Text>
 
           <Text size="xs" c="dimmed">
             Description about {player} goes here. Maybe their playstyle or
-            favorite strategies. This is just placeholder text for now.
+            favorite strategies.
           </Text>
         </Stack>
 
         <Group gap="xs">
           <Badge variant="light">Games: {games.length}</Badge>
           <Badge variant="light">Avg: {avg}</Badge>
-          <Badge color="blue">{total} pts</Badge>
+          <Badge color={color}>{total} pts</Badge>
         </Group>
       </Group>
     </Card>
