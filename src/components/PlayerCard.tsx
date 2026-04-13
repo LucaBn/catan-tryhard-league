@@ -12,6 +12,7 @@ type Props = {
 export default function PlayerCard({ player, data }: Props) {
   const games = data.filter((d) => d.player === player);
 
+  const wins = games.filter((g) => g.points === 10).length;
   const total = games.reduce((sum, g) => sum + g.points, 0);
   const avg = games.length ? (total / games.length).toFixed(2) : "0";
 
@@ -38,6 +39,7 @@ export default function PlayerCard({ player, data }: Props) {
 
         <Group gap="xs">
           <Badge variant="light">Games: {games.length}</Badge>
+          <Badge variant="light">👑: {wins}</Badge>
           <Badge variant="light">Avg: {avg}</Badge>
           <Badge color={color}>{total} pts</Badge>
         </Group>
