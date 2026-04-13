@@ -1,6 +1,6 @@
 import { GameRecord } from "@/types";
 
-export function parseCsv(csv: string): GameRecord[] {
+export const parseCsv = (csv: string): GameRecord[] => {
   return csv
     .trim()
     .split("\n")
@@ -17,4 +17,4 @@ export function parseCsv(csv: string): GameRecord[] {
         points: Number(points),
       };
     });
-}
+};

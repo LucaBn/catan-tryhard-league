@@ -1,5 +1,7 @@
-import { Table, Paper, Title } from "@mantine/core";
+import { Table, Paper, Title, Text, Flex } from "@mantine/core";
+import { PieChart } from "@mantine/charts";
 import { GameRecord } from "@/types";
+import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
 
 type Props = {
   data: GameRecord[];
@@ -49,13 +51,27 @@ export default function ScoreChart({ data }: Props) {
     (a, b) => b.totalPoints - a.totalPoints,
   );
 
+  const pointsData = sorted.map((p) => ({
+    name: p.player,
+    value: p.totalPoints,
+    color: getColorFromPlayerName(p.player),
+  }));
+
+  const winsData = sorted
+    .filter((p) => p.wins > 0)
+    .map((p) => ({
+      name: p.player,
+      value: p.wins,
+      color: getColorFromPlayerName(p.player),
+    }));
+
   return (
     <Paper p="md" shadow="sm" radius="md">
-      <Title order={3} mb="sm">
-        🏆 Championship Standings
+      <Title order={3} mb="md">
+        🏆 Championship Stats
       </Title>
 
-      <Table striped highlightOnHover>
+      <Table striped highlightOnHover mb={24}>
         <thead>
           <tr style={{ textAlign: "left" }}>
             <th>Player</th>
@@ -76,6 +92,31 @@ export default function ScoreChart({ data }: Props) {
           ))}
         </tbody>
       </Table>
+
+      <Flex gap="xl" justify="center" wrap="wrap">
+        <Flex gap="xs" direction="column">
+          <Text fz="xs" ta="center">
+            Total points
+          </Text>
+          <PieChart
+            data={pointsData}
+            withTooltip
+            withLabels
+            labelsPosition="inside"
+          />
+        </Flex>
+        <Flex gap="xs" direction="column">
+          <Text fz="xs" ta="center">
+            Total wins
+          </Text>
+          <PieChart
+            data={winsData}
+            withTooltip
+            withLabels
+            labelsPosition="inside"
+          />
+        </Flex>
+      </Flex>
     </Paper>
   );
 }
