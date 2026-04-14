@@ -128,31 +128,33 @@ export default function Leaderboard({ data }: Props) {
         </Group>
       </Group>
 
-      <Table striped withRowBorders={false} highlightOnHover mb={24}>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Player</Table.Th>
-            <Table.Th>Games</Table.Th>
-            <Table.Th>Wins 👑</Table.Th>
-            <Table.Th>Win Rate</Table.Th>
-            <Table.Th>Total Points</Table.Th>
-            <Table.Th>Avg Points</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-
-        <Table.Tbody>
-          {sorted.map((p) => (
-            <Table.Tr key={p.player}>
-              <Table.Td>{p.player}</Table.Td>
-              <Table.Td>{p.games}</Table.Td>
-              <Table.Td>{p.wins}</Table.Td>
-              <Table.Td>{p.winRate.toFixed(0)}%</Table.Td>
-              <Table.Td>{p.totalPoints}</Table.Td>
-              <Table.Td>{p.avg.toFixed(1)}</Table.Td>
+      <Group maw="100%" style={{ overflowX: "auto" }}>
+        <Table striped withRowBorders={false} highlightOnHover mb={24}>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Player</Table.Th>
+              <Table.Th>Games</Table.Th>
+              <Table.Th>Wins 👑</Table.Th>
+              <Table.Th>Win Rate</Table.Th>
+              <Table.Th>Total Points</Table.Th>
+              <Table.Th>Avg Points</Table.Th>
             </Table.Tr>
-          ))}
-        </Table.Tbody>
-      </Table>
+          </Table.Thead>
+
+          <Table.Tbody>
+            {sorted.map((p) => (
+              <Table.Tr key={p.player}>
+                <Table.Td>{p.player}</Table.Td>
+                <Table.Td>{p.games}</Table.Td>
+                <Table.Td>{p.wins}</Table.Td>
+                <Table.Td>{p.winRate.toFixed(0)}%</Table.Td>
+                <Table.Td>{p.totalPoints}</Table.Td>
+                <Table.Td>{p.avg.toFixed(1)}</Table.Td>
+              </Table.Tr>
+            ))}
+          </Table.Tbody>
+        </Table>
+      </Group>
 
       <Flex mt="xl" gap="xl" justify="center" wrap="wrap">
         <ScorePieCharts pointsData={pointsData} winsData={winsData} />
