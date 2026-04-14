@@ -76,9 +76,9 @@ export default function Players({ data }: Props) {
             onChange={setSortBy}
             data={[
               { value: "total", label: "Total points" },
+              { value: "avg", label: "Average points" },
               { value: "wins", label: "Wins" },
               { value: "winRate", label: "Win Rate" },
-              { value: "avg", label: "Average points" },
               { value: "games", label: "Games" },
             ]}
           />
