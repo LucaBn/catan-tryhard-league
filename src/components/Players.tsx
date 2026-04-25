@@ -14,6 +14,9 @@ type PlayerStats = {
   games: number;
   total: number;
   avg: number;
+  wins: number;
+  winRate: number;
+  variance: number;
 };
 
 export default function Players({ data }: Props) {
@@ -21,28 +24,39 @@ export default function Players({ data }: Props) {
   const [direction, setDirection] = useState<"asc" | "desc">("desc");
 
   const stats = useMemo<PlayerStats[]>(() => {
-    const map: Record<string, PlayerStats> = {};
+    const map: Record<string, { points: number[] }> = {};
 
     data.forEach((d) => {
       if (!map[d.player]) {
-        map[d.player] = {
-          player: d.player,
-          games: 0,
-          total: 0,
-          avg: 0,
-        };
+        map[d.player] = { points: [] };
       }
 
-      map[d.player].games += 1;
-      map[d.player].total += d.points;
+      map[d.player].points.push(d.points);
     });
 
-    return Object.values(map).map((p) => ({
-      ...p,
-      avg: p.games ? p.total / p.games : 0,
-      wins: p.total >= 10 ? 1 : 0,
-      winRate: p.games ? (p.total >= 10 ? 1 : 0) / p.games : 0,
-    }));
+    return Object.entries(map).map(([player, { points }]) => {
+      const games = points.length;
+      const total = points.reduce((a, b) => a + b, 0);
+      const avg = games ? total / games : 0;
+
+      const wins = points.filter((p) => p === 10).length;
+      const winRate = games ? wins / games : 0;
+
+      const variance =
+        games > 0
+          ? points.reduce((sum, p) => sum + (p - avg) ** 2, 0) / games
+          : 0;
+
+      return {
+        player,
+        games,
+        total,
+        avg,
+        wins,
+        winRate,
+        variance,
+      };
+    });
   }, [data]);
 
   const filtered = useMemo(() => {
@@ -80,6 +94,7 @@ export default function Players({ data }: Props) {
               { value: "wins", label: "Wins" },
               { value: "winRate", label: "Win Rate" },
               { value: "games", label: "Games" },
+              { value: "variance", label: "Variance" },
             ]}
           />
           <Select
@@ -93,11 +108,24 @@ export default function Players({ data }: Props) {
             ]}
           />
         </Group>
+        {sortBy === "variance" && (
+          <Text c="dimmed" size="xs">
+            Variance indicates consistency in performance.
+            <br />
+            Lower variance means more consistent results, while higher variance
+            indicates more fluctuation in points scored.
+          </Text>
+        )}
       </Group>
 
-      <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="md">
+      <SimpleGrid cols={{ base: 1, sm: 3, lg: 4 }} spacing="md">
         {filtered.map((p) => (
-          <PlayerCard key={p.player} player={p.player} data={data} />
+          <PlayerCard
+            key={p.player}
+            player={p.player}
+            data={data}
+            sorting={sortBy}
+          />
         ))}
       </SimpleGrid>
     </>

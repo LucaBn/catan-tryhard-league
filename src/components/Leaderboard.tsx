@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Flex, Group, Paper, Select, Table, Text, Title } from "@mantine/core";
+import { IconArrowDown, IconArrowUp } from "@tabler/icons-react";
 
 import { ScorePieCharts } from "@/components/ScorePieCharts";
 import ScoreProgressChart from "@/components/ScoreProgressChart";
@@ -91,6 +92,14 @@ export default function Leaderboard({ data }: Props) {
       color: getColorFromPlayerName(p.player),
     }));
 
+  const handleSortBy = (field: string) => {
+    if (sortBy === field) {
+      setDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortBy(field);
+    }
+  };
+
   return (
     <Paper p="md" shadow="sm" radius="md">
       <Title order={3} mb="md">
@@ -133,11 +142,76 @@ export default function Leaderboard({ data }: Props) {
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Player</Table.Th>
-              <Table.Th>Games</Table.Th>
-              <Table.Th>Wins 👑</Table.Th>
-              <Table.Th>Win Rate</Table.Th>
-              <Table.Th>Total Points</Table.Th>
-              <Table.Th>Avg Points</Table.Th>
+              <Table.Th
+                onClick={() => handleSortBy("games")}
+                style={{ cursor: "pointer" }}
+              >
+                <Group gap={4} align="center">
+                  Games
+                  {sortBy === "games" &&
+                    (direction === "asc" ? (
+                      <IconArrowUp size={16} />
+                    ) : (
+                      <IconArrowDown size={16} />
+                    ))}
+                </Group>
+              </Table.Th>
+              <Table.Th
+                onClick={() => handleSortBy("wins")}
+                style={{ cursor: "pointer" }}
+              >
+                <Group gap={4} align="center">
+                  Wins 👑
+                  {sortBy === "wins" &&
+                    (direction === "asc" ? (
+                      <IconArrowUp size={16} />
+                    ) : (
+                      <IconArrowDown size={16} />
+                    ))}
+                </Group>
+              </Table.Th>
+              <Table.Th
+                onClick={() => handleSortBy("winRate")}
+                style={{ cursor: "pointer" }}
+              >
+                <Group gap={4} align="center">
+                  Win Rate
+                  {sortBy === "winRate" &&
+                    (direction === "asc" ? (
+                      <IconArrowUp size={16} />
+                    ) : (
+                      <IconArrowDown size={16} />
+                    ))}
+                </Group>
+              </Table.Th>
+              <Table.Th
+                onClick={() => handleSortBy("total")}
+                style={{ cursor: "pointer" }}
+              >
+                <Group gap={4} align="center">
+                  Total Points
+                  {sortBy === "total" &&
+                    (direction === "asc" ? (
+                      <IconArrowUp size={16} />
+                    ) : (
+                      <IconArrowDown size={16} />
+                    ))}
+                </Group>
+              </Table.Th>
+              <Table.Th
+                onClick={() => handleSortBy("avg")}
+                style={{ cursor: "pointer" }}
+              >
+                <Group gap={4} align="center">
+                  Avg Points
+                  {sortBy === "avg" &&
+                    (direction === "asc" ? (
+                      <IconArrowUp size={16} />
+                    ) : (
+                      <IconArrowDown size={16} />
+                    ))}
+                </Group>
+              </Table.Th>
             </Table.Tr>
           </Table.Thead>
 
