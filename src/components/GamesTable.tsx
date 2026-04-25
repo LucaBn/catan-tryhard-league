@@ -142,6 +142,11 @@ export default function GamesTable({ data }: Props) {
             </Accordion.Item>
           </Accordion>
         ))}
+        {filteredGames.length === 0 && (
+          <Text c="dimmed" mt="md">
+            Select at least one player.
+          </Text>
+        )}
       </Stack>
     </Paper>
   );
