@@ -15,6 +15,9 @@ export default function PlayerCard({ player, data }: Props) {
   const wins = games.filter((g) => g.points === 10).length;
   const total = games.reduce((sum, g) => sum + g.points, 0);
   const avg = games.length ? (total / games.length).toFixed(2) : "0";
+  const winRate = games.length
+    ? ((wins / games.length) * 100).toFixed(0) + "%"
+    : "0%";
 
   const initial = player.charAt(0).toUpperCase();
   const color = getColorFromPlayerName(player);
@@ -40,10 +43,7 @@ export default function PlayerCard({ player, data }: Props) {
         <Group gap="xs">
           <Badge variant="light">Games: {games.length}</Badge>
           <Badge variant="light">Wins 👑: {wins}</Badge>
-          <Badge variant="light">
-            Win rate:{" "}
-            {games.length ? ((wins / games.length) * 100).toFixed(0) : "0"}%
-          </Badge>
+          <Badge variant="light">Win rate: {winRate}</Badge>
           <Badge variant="light">Avg points: {avg}</Badge>
           <Badge color={color}>{total} pts</Badge>
         </Group>
