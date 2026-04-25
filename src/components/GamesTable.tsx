@@ -1,7 +1,9 @@
+import { useEffect, useMemo, useState } from "react";
 import {
   Accordion,
   Badge,
   Group,
+  MultiSelect,
   Paper,
   Stack,
   Table,
@@ -24,6 +26,12 @@ type GameSummary = {
 };
 
 export default function GamesTable({ data }: Props) {
+  const allPlayers = useMemo(() => {
+    return Array.from(new Set(data.map((d) => d.player)));
+  }, [data]);
+
+  const [selectedPlayers, setSelectedPlayers] = useState<string[]>(allPlayers);
+
   const gamesMap: Record<number, GameSummary> = {};
 
   data.forEach((row) => {
@@ -51,21 +59,43 @@ export default function GamesTable({ data }: Props) {
     })
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
+  const filteredGames = games
+    .filter((g) => g.players.some((p) => selectedPlayers.includes(p.player)))
+    .map((g) => {
+      const winner = [...g.players].sort((a, b) => b.points - a.points)[0]
+        .player;
+
+      return { ...g, winner };
+    });
+
   return (
     <Paper p="md" shadow="sm" radius="md">
       <Title order={3} mb="md">
         🎮 Games
       </Title>
 
+      <Group gap={2} mb="md">
+        <Text me={8}>Show games with selected players:</Text>
+        <Group justify="flex-start" wrap="wrap" gap={8}>
+          <MultiSelect
+            data={allPlayers}
+            value={selectedPlayers}
+            onChange={setSelectedPlayers}
+            placeholder="Select players"
+            clearable
+          />
+        </Group>
+      </Group>
+
       <Stack gap="xs">
-        {games.map((g) => (
+        {filteredGames.map((g) => (
           <Accordion key={g.game} variant="separated">
             <Accordion.Item value={`game-${g.game}`}>
               <Accordion.Control>
                 <Group justify="space-between" w="100%">
                   <Text size="sm" c="dimmed">
-                    Game {g.game} -{" "}
-                    {new Date(g.date).toLocaleDateString("it-IT")}
+                    #{g.game} - {new Date(g.date).toLocaleDateString("it-IT")} -{" "}
+                    {g.players.length} players
                   </Text>
 
                   <Group gap={4} me={8}>
