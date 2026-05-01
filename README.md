@@ -46,7 +46,7 @@ Update the sheet → refresh the site → instant new arguments.
 ## 📦 Installation
 
 ```
-git clone https://github.com/your-username/catan-tryhard-league.git
+git clone https://github.com/lucabn/catan-tryhard-league.git
 cd catan-tryhard-league
 npm install
 npm run dev
