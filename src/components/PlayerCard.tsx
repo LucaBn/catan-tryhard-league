@@ -22,7 +22,7 @@ type Props = {
 export default function PlayerCard({ player, data, sorting }: Props) {
   const games = data.filter((d) => d.player === player);
 
-  const wins = games.filter((g) => g.points === 10).length;
+  const wins = games.filter((g) => g.points >= 10).length;
   const total = games.reduce((sum, g) => sum + g.points, 0);
   const avgNum = games.length ? total / games.length : 0;
   const avg = games.length ? avgNum.toFixed(2) : "0";
@@ -53,7 +53,7 @@ export default function PlayerCard({ player, data, sorting }: Props) {
       (g) => playersPerGame.get(g.game) === numPlayers,
     );
 
-    const wins = filtered.filter((g) => g.points === 10).length;
+    const wins = filtered.filter((g) => g.points >= 10).length;
 
     const rate = filtered.length
       ? ((wins / filtered.length) * 100).toFixed(0) + "%"

@@ -27,10 +27,10 @@ date,game,player,points
 2026-01-01,1,Marco,8
 2026-01-01,1,Giovanni,7
 2026-01-01,1,Matteo,5
-2026-01-01,2,Luca,6
 2026-01-01,2,Marco,10
 2026-01-01,2,Giovanni,7
 2026-01-01,2,Matteo,7
+2026-01-01,2,Luca,6
 ```
 
 Update the sheet → refresh the site → instant new arguments.

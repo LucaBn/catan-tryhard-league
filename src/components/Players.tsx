@@ -39,7 +39,7 @@ export default function Players({ data }: Props) {
       const total = points.reduce((a, b) => a + b, 0);
       const avg = games ? total / games : 0;
 
-      const wins = points.filter((p) => p === 10).length;
+      const wins = points.filter((p) => p >= 10).length;
       const winRate = games ? wins / games : 0;
 
       const variance =
