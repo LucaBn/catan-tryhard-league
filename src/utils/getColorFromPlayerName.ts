@@ -9,6 +9,7 @@ export const getColorFromPlayerName = (name: string) => {
     Luca: "#F44336",
     Pelle: "#008000",
     Sara: "#FF9F40",
+    Ste: "#FF00FF",
   };
 
   return colorMap[name] ?? "#9AA0A6";

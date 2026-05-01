@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { Flex, Group, Paper, Select, Table, Text, Title } from "@mantine/core";
 import { IconArrowDown, IconArrowUp } from "@tabler/icons-react";
-import { IconArrowDown, IconArrowUp } from "@tabler/icons-react";
 
 import { ScorePieCharts } from "@/components/ScorePieCharts";
 import ScoreProgressChart from "@/components/ScoreProgressChart";

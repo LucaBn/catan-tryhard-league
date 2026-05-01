@@ -124,8 +124,6 @@ export default function GamesTable({ data }: Props) {
                 <Group justify="space-between" w="100%">
                   <Text size="sm" c="dimmed">
                     #{g.game} - {new Date(g.date).toLocaleDateString("it-IT")} -{" "}
-                    {g.players.length} players #{g.game} -{" "}
-                    {new Date(g.date).toLocaleDateString("it-IT")} -{" "}
                     {g.players.length} players
                   </Text>
 
