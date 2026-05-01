@@ -1,5 +1,13 @@
 import { Sparkline } from "@mantine/charts";
-import { Avatar, Badge, Card, Group, Stack, Text } from "@mantine/core";
+import {
+  Avatar,
+  Badge,
+  Card,
+  Divider,
+  Group,
+  Stack,
+  Text,
+} from "@mantine/core";
 
 import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
 
@@ -33,6 +41,30 @@ export default function PlayerCard({ player, data, sorting }: Props) {
 
   const last10 = games.slice(-10);
   const chartData = last10.map((g) => g.points);
+
+  const playersPerGame = new Map<number, number>();
+
+  data.forEach((g) => {
+    playersPerGame.set(g.game, (playersPerGame.get(g.game) || 0) + 1);
+  });
+
+  const winRateByPlayers = [3, 4, 5, 6].map((numPlayers) => {
+    const filtered = games.filter(
+      (g) => playersPerGame.get(g.game) === numPlayers,
+    );
+
+    const wins = filtered.filter((g) => g.points === 10).length;
+
+    const rate = filtered.length
+      ? ((wins / filtered.length) * 100).toFixed(0) + "%"
+      : "-";
+
+    return {
+      players: numPlayers,
+      rate,
+      count: filtered.length,
+    };
+  });
 
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder>
@@ -73,6 +105,19 @@ export default function PlayerCard({ player, data, sorting }: Props) {
           <Badge variant={sorting === "variance" ? "filled" : "outline"}>
             Variance: {variance}
           </Badge>
+        </Group>
+
+        <Divider w="100%" />
+
+        <Group gap="xs">
+          <Text size="xs" c="dimmed">
+            Win rate by number of players:
+          </Text>
+          {winRateByPlayers.map(({ players, rate, count }) => (
+            <Badge key={players} variant="outline">
+              {players}p: {rate} ({count})
+            </Badge>
+          ))}
         </Group>
 
         {games.length > 1 && (
