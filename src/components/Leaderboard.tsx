@@ -21,7 +21,7 @@ type PlayerStats = {
 };
 
 export default function Leaderboard({ data }: Props) {
-  const [sortBy, setSortBy] = useState<string>("totalPoints");
+  const [sortBy, setSortBy] = useState<keyof PlayerStats>("totalPoints");
   const [direction, setDirection] = useState<"asc" | "desc">("desc");
 
   const gamesMap: Record<string, Record<string, number>> = {};
@@ -92,7 +92,7 @@ export default function Leaderboard({ data }: Props) {
       color: getColorFromPlayerName(p.player),
     }));
 
-  const handleSortBy = (field: string) => {
+  const handleSortBy = (field: keyof PlayerStats) => {
     if (sortBy === field) {
       setDirection((prev) => (prev === "asc" ? "desc" : "asc"));
     } else {
@@ -185,12 +185,12 @@ export default function Leaderboard({ data }: Props) {
                 </Group>
               </Table.Th>
               <Table.Th
-                onClick={() => handleSortBy("total")}
+                onClick={() => handleSortBy("totalPoints")}
                 style={{ cursor: "pointer" }}
               >
                 <Group gap={4} align="center">
                   Total Points
-                  {sortBy === "total" &&
+                  {sortBy === "totalPoints" &&
                     (direction === "asc" ? (
                       <IconArrowUp size={16} />
                     ) : (
