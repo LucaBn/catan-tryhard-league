@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import {
   Accordion,
   Badge,
+  Chip,
   Group,
   MultiSelect,
   Paper,
@@ -31,6 +32,12 @@ export default function GamesTable({ data }: Props) {
   }, [data]);
 
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>(allPlayers);
+  const [selectedPlayerCounts, setSelectedPlayerCounts] = useState<string[]>([
+    "3",
+    "4",
+    "5",
+    "6",
+  ]);
 
   const gamesMap: Record<number, GameSummary> = {};
 
@@ -60,7 +67,11 @@ export default function GamesTable({ data }: Props) {
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   const filteredGames = games
-    .filter((g) => g.players.some((p) => selectedPlayers.includes(p.player)))
+    .filter(
+      (g) =>
+        g.players.some((p) => selectedPlayers.includes(p.player)) &&
+        selectedPlayerCounts.includes(String(g.players.length)),
+    )
     .map((g) => {
       const winner = [...g.players].sort((a, b) => b.points - a.points)[0]
         .player;
@@ -74,18 +85,36 @@ export default function GamesTable({ data }: Props) {
         🎮 Games
       </Title>
 
-      <Group gap={2} mb="md">
-        <Text me={8}>Show games with selected players:</Text>
-        <Group justify="flex-start" wrap="wrap" gap={8}>
+      <Stack gap="md" mb="md">
+        <Stack gap={4}>
+          <Text size="sm">Show games with selected players:</Text>
           <MultiSelect
             data={allPlayers}
             value={selectedPlayers}
             onChange={setSelectedPlayers}
             placeholder="Select players"
             clearable
+            searchable
           />
-        </Group>
-      </Group>
+        </Stack>
+
+        <Stack gap={4}>
+          <Text size="sm">Players per game:</Text>
+          <Chip.Group
+            multiple
+            value={selectedPlayerCounts}
+            onChange={setSelectedPlayerCounts}
+          >
+            <Group gap="xs">
+              {["3", "4", "5", "6"].map((n) => (
+                <Chip key={n} value={n}>
+                  {n}
+                </Chip>
+              ))}
+            </Group>
+          </Chip.Group>
+        </Stack>
+      </Stack>
 
       <Stack gap="xs">
         {filteredGames.map((g) => (
@@ -144,7 +173,8 @@ export default function GamesTable({ data }: Props) {
         ))}
         {filteredGames.length === 0 && (
           <Text c="dimmed" mt="md">
-            Select at least one player.
+            Select more players or more "players per game" options to see games
+            here.
           </Text>
         )}
       </Stack>
