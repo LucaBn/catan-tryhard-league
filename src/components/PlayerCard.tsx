@@ -62,6 +62,7 @@ export default function PlayerCard({ player, data, sorting }: Props) {
     return {
       players: numPlayers,
       rate,
+      wins,
       count: filtered.length,
     };
   });
@@ -113,9 +114,9 @@ export default function PlayerCard({ player, data, sorting }: Props) {
           <Text size="xs" c="dimmed" w="100%">
             Win rate by number of players:
           </Text>
-          {winRateByPlayers.map(({ players, rate, count }) => (
+          {winRateByPlayers.map(({ players, rate, wins, count }) => (
             <Badge key={players} variant="outline">
-              {players}p: {rate} ({count})
+              {players}p: {rate} ({wins}/{count})
             </Badge>
           ))}
         </Group>
