@@ -1,39 +1,53 @@
 # 🏝️ Catan Tryhard League
 
-A small web app to track results from our Catan games and finally answer the most important question:
+👉 https://catan-tryhard-league.pages.dev
+
+A small web app to track results from your Catan games and finally answer the most important question:
 
 **Who is actually the best player?**
 
-Built with **React** and **Mantine**, it turns a simple spreadsheet into charts, rankings, and player stats — because clearly we needed more reasons to argue.
+Built with **React** and **Mantine**, it turns a simple spreadsheet into charts, rankings, and player stats — because clearly we all need more reasons to argue.
 
 ## 🚀 Features
 
+- 🏆 Leaderboard
 - 📊 Score progression charts for each player
-- 🏆 Leaderboard with total points
-- 👤 Player stats (games played, average score, total points)
+- 👤 Detailed player stats
+- 🎉 Fun insights (“Fan Facts”)
 - ☁️ Data fetched from Google Sheets (CSV)
-- ⚡ Fast, single-page application
+- ⚡ Fast, no backend, no accounts
 - 🎨 Clean UI with Mantine components
 
-## 📁 Data Source
+## 🌐 How it works
 
-Game data is stored in a Google Sheet and published as CSV.
+Each group can use their own Google Sheet.
 
-Example format:
+Just open the app with your sheet ID.
 
-```
-date,game,player,points
-2026-01-01,1,Luca,10
-2026-01-01,1,Marco,8
-2026-01-01,1,Giovanni,7
-2026-01-01,1,Matteo,5
-2026-01-01,2,Marco,10
-2026-01-01,2,Giovanni,7
-2026-01-01,2,Matteo,7
-2026-01-01,2,Luca,6
-```
+This one uses an example template ID:
 
-Update the sheet → refresh the site → instant new arguments.
+https://catan-tryhard-league.pages.dev?id=1DrXpjuFCPClz4YB0PTb5zDlS_4__t03xxqlHKz4XVg8
+
+If no ID is provided, the app will ask for it.
+
+## 🧪 Template
+
+Start from this ready-to-use sheet:
+
+https://docs.google.com/spreadsheets/d/1DrXpjuFCPClz4YB0PTb5zDlS_4__t03xxqlHKz4XVg8
+
+Steps:
+
+1. Make a copy to your Drive
+2. Update your game results
+3. Copy the sheet ID from the URL
+4. Open the app and use your ID when required
+
+Notes
+
+- `game` → same number = same game
+- `points` → your scoring system (10 or more = win by default)
+- No strict limits on players (supports 3–6+)
 
 ## 🛠️ Tech Stack
 
@@ -50,14 +64,6 @@ git clone https://github.com/lucabn/catan-tryhard-league.git
 cd catan-tryhard-league
 npm install
 npm run dev
-```
-
-## 🔌 Configuration
-
-Update the Google Sheets CSV URL in:
-
-```
-src/hooks/useSheetsData.js
 ```
 
 ## 🏗️ Build

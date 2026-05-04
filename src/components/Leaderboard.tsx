@@ -2,10 +2,10 @@ import { useMemo, useState } from "react";
 import { Flex, Group, Paper, Select, Table, Text, Title } from "@mantine/core";
 import { IconArrowDown, IconArrowUp } from "@tabler/icons-react";
 
-import { ScorePieCharts } from "@/components/ScorePieCharts";
+// import { ScorePieCharts } from "@/components/ScorePieCharts";
 import ScoreProgressChart from "@/components/ScoreProgressChart";
 import { GameRecord } from "@/types";
-import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
+// import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
 
 type Props = {
   data: GameRecord[];
@@ -78,19 +78,19 @@ export default function Leaderboard({ data }: Props) {
     });
   }, [stats, sortBy, direction]);
 
-  const pointsData = sorted.map((p) => ({
-    name: p.player,
-    value: p.totalPoints,
-    color: getColorFromPlayerName(p.player),
-  }));
+  // const pointsData = sorted.map((p) => ({
+  //   name: p.player,
+  //   value: p.totalPoints,
+  //   color: getColorFromPlayerName(p.player),
+  // }));
 
-  const winsData = sorted
-    .filter((p) => p.wins > 0)
-    .map((p) => ({
-      name: p.player,
-      value: p.wins,
-      color: getColorFromPlayerName(p.player),
-    }));
+  // const winsData = sorted
+  //   .filter((p) => p.wins > 0)
+  //   .map((p) => ({
+  //     name: p.player,
+  //     value: p.wins,
+  //     color: getColorFromPlayerName(p.player),
+  //   }));
 
   const handleSortBy = (field: keyof PlayerStats) => {
     if (sortBy === field) {
@@ -230,9 +230,9 @@ export default function Leaderboard({ data }: Props) {
         </Table>
       </Group>
 
-      <Flex mt="xl" gap="xl" justify="center" wrap="wrap">
+      {/* <Flex mt="xl" gap="xl" justify="center" wrap="wrap">
         <ScorePieCharts pointsData={pointsData} winsData={winsData} />
-      </Flex>
+      </Flex> */}
 
       <Flex mt="xl" justify="center">
         <ScoreProgressChart data={data} />
