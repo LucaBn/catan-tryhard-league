@@ -27,7 +27,18 @@ export default function Header() {
       }}
     >
       <Group justify="space-between" px="md" py="sm" align="center">
-        <Title order={3}>🏝️ Catan Tryhard League</Title>
+        <Title
+          order={3}
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            })
+          }
+          style={{ cursor: "pointer" }}
+        >
+          🏝️ Catan Tryhard League
+        </Title>
 
         <Tooltip label="Toggle theme">
           <Switch

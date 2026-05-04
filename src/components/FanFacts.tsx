@@ -31,24 +31,20 @@ export default function FanFacts({ data }: Props) {
 
       let streak = 0;
       let maxStreak = 0;
-      let start = 0;
-      let tempStart = 0;
 
       sorted.forEach((g) => {
         if (g.points >= 10) {
-          if (streak === 0) tempStart = g.game;
           streak++;
 
           if (streak > maxStreak) {
             maxStreak = streak;
-            start = tempStart;
           }
         } else {
           streak = 0;
         }
       });
 
-      return { player, maxStreak, start };
+      return { player, maxStreak };
     });
 
     const maxStreak = Math.max(...streakByPlayer.map((p) => p.maxStreak));
@@ -81,8 +77,11 @@ export default function FanFacts({ data }: Props) {
     }
 
     const over10ByPlayer = Object.entries(byPlayer).map(([player, games]) => {
-      const matches = games.filter((g) => g.points > 10);
-      return { player, count: matches.length, matches };
+      const gamesWithOver10 = games.filter((g) => g.points > 10);
+      return {
+        player,
+        count: gamesWithOver10.length,
+      };
     });
 
     const maxOver10 = Math.max(...over10ByPlayer.map((p) => p.count));
