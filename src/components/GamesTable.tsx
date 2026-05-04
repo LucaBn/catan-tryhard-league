@@ -116,7 +116,7 @@ export default function GamesTable({ data }: Props) {
         </Stack>
       </Stack>
 
-      <Stack gap="xs">
+      <Stack gap="xs" style={{ maxHeight: 500, overflowY: "auto" }}>
         {filteredGames.map((g) => (
           <Accordion key={g.game} variant="separated">
             <Accordion.Item value={`game-${g.game}`}>
