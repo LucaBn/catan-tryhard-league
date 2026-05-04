@@ -1,5 +1,6 @@
 import { Center, Container, Divider, Flex, Loader } from "@mantine/core";
 
+import FanFacts from "@/components/FanFacts";
 import Footer from "@/components/Footer";
 import GamesTable from "@/components/GamesTable";
 import Header from "@/components/Header";
@@ -30,6 +31,7 @@ export default function App() {
         <Leaderboard data={data} />
         <GamesTable data={data} />
         <Players data={data} />
+        <FanFacts data={data} />
       </Flex>
 
       <Divider my="md" />
