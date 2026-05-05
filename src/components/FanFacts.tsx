@@ -73,7 +73,7 @@ export default function FanFacts({ data }: Props) {
       const top = highScoreByPlayer.filter((p) => p.ratio === maxRatio);
       const names = formatList(top.map((p) => p.player));
 
-      results.push(`💪 ${names} score 8+ points in most of their games`);
+      results.push(`💪 ${names} scored 8+ points in most of their games`);
     }
 
     const over10ByPlayer = Object.entries(byPlayer).map(([player, games]) => {
