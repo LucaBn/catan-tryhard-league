@@ -1,7 +1,8 @@
-import { Sparkline } from "@mantine/charts";
+import { LineChart } from "@mantine/charts";
 import {
   Avatar,
   Badge,
+  Box,
   Card,
   Divider,
   Group,
@@ -122,21 +123,35 @@ export default function PlayerCard({ player, data, sorting }: Props) {
         </Group>
 
         {games.length > 1 && (
-          <Group gap={0} align="center">
-            <Sparkline
-              w={200}
-              h={60}
-              data={chartData}
-              curveType="linear"
-              color={color}
-              fillOpacity={0.6}
-              strokeWidth={2}
-              p={0}
-            />
-            <Text size="xs" c="dimmed" mt={4}>
-              Last {chartData.length < 10 ? chartData.length : 10} games
-              performance
+          <Group w="100%">
+            <Text size="xs" c="dimmed" w="100%">
+              Last {Math.min(chartData.length, 10)} games
             </Text>
+            <Box style={{ width: "100%", minWidth: 0 }}>
+              <LineChart
+                h={120}
+                data={chartData.map((points) => ({
+                  points,
+                }))}
+                dataKey="points"
+                series={[{ name: "points", color }]}
+                withTooltip={false}
+                withXAxis={false}
+                withYAxis={false}
+                withPointLabels={true}
+                gridAxis="x"
+                yAxisProps={{
+                  domain: [2, 12],
+                  tickCount: 6,
+                  tickFormatter: (value) => {
+                    return value === 10 ? "" : ""; // Can't say why but if I use this it show horizontal lines correctly 🤷‍♂️
+                  },
+                }}
+                valueFormatter={(value) =>
+                  value >= 10 ? `${value} 👑` : `${value}`
+                }
+              />
+            </Box>
           </Group>
         )}
       </Group>
