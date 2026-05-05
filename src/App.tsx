@@ -5,6 +5,7 @@ import {
   Container,
   Divider,
   Flex,
+  List,
   Loader,
   Text,
   TextInput,
@@ -33,7 +34,7 @@ export default function App() {
   if (!sheetId) {
     return (
       <Center h="100vh">
-        <Flex direction="column" gap="md" maw={400} w="100%">
+        <Flex direction="column" gap="xs" maw={500} w="100%">
           <Header />
 
           <Text size="sm">Paste your Google Sheets ID</Text>
@@ -42,6 +43,7 @@ export default function App() {
             placeholder="Paste your Google Sheets ID"
             value={input}
             onChange={(e) => setInput(e.currentTarget.value)}
+            mb={15}
           />
 
           <Button
@@ -52,6 +54,30 @@ export default function App() {
           >
             Load
           </Button>
+
+          <Divider my="sm" />
+
+          <Text fw={600} size="xl">
+            Don't have a Google Sheets ID?
+          </Text>
+          <Flex direction="column" gap={4}>
+            <List type="ordered">
+              <List.Item>
+                Download the example template from{" "}
+                <a
+                  href="https://docs.google.com/spreadsheets/d/1DrXpjuFCPClz4YB0PTb5zDlS_4__t03xxqlHKz4XVg8"
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                >
+                  here
+                </a>
+              </List.Item>
+              <List.Item>Make a copy to your Drive</List.Item>
+              <List.Item>Update your game results</List.Item>
+              <List.Item>Copy the sheet ID from the URL</List.Item>
+              <List.Item>Open the app and paste your ID above</List.Item>
+            </List>
+          </Flex>
         </Flex>
       </Center>
     );
