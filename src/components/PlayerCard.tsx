@@ -68,6 +68,27 @@ export default function PlayerCard({ player, data, sorting }: Props) {
     };
   });
 
+  const gameMap = new Map<number, GameRecord[]>();
+
+  data.forEach((g) => {
+    if (!gameMap.has(g.game)) gameMap.set(g.game, []);
+    gameMap.get(g.game)!.push(g);
+  });
+
+  let gold = 0;
+  let silver = 0;
+  let bronze = 0;
+
+  gameMap.forEach((players) => {
+    const sorted = [...players].sort((a, b) => b.points - a.points);
+
+    const index = sorted.findIndex((p) => p.player === player);
+
+    if (index === 0) gold++;
+    else if (index === 1) silver++;
+    else if (index === 2) bronze++;
+  });
+
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder>
       <Group align="center" gap="md">
@@ -80,20 +101,37 @@ export default function PlayerCard({ player, data, sorting }: Props) {
             {player}
           </Text>
 
-          <Text size="xs" c="dimmed">
+          {/* <Text size="xs" c="dimmed">
             Description about {player} goes here. Maybe their playstyle or
             favorite strategies.
-          </Text>
+          </Text> */}
         </Stack>
+
+        <Group gap="xs">
+          <Badge
+            color="yellow"
+            variant={sorting === "wins" ? "filled" : "light"}
+          >
+            👑 {gold}
+          </Badge>
+
+          <Badge color="gray" variant="light">
+            🥈 {silver}
+          </Badge>
+
+          <Badge color="orange" variant="light">
+            🥉 {bronze}
+          </Badge>
+        </Group>
 
         <Group gap="xs">
           <Group gap="xs">
             <Badge variant={sorting === "games" ? "filled" : "outline"}>
               Games: {games.length}
             </Badge>
-            <Badge variant={sorting === "wins" ? "filled" : "outline"}>
+            {/* <Badge variant={sorting === "wins" ? "filled" : "outline"}>
               Wins 👑: {wins}
-            </Badge>
+            </Badge> */}
             <Badge variant={sorting === "total" ? "filled" : "outline"}>
               Total pts: {total}
             </Badge>
