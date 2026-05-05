@@ -11,13 +11,19 @@ export function useSheetsData(sheetId?: string) {
   useEffect(() => {
     if (!sheetId) return;
 
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+    const url = `/api/sheet?id=${sheetId}`;
 
-    axios.get(url).then((res) => {
-      const parsed = parseCsv(res.data);
-      setData(parsed);
-      setLoading(false);
-    });
+    axios
+      .get(url, {
+        withCredentials: false,
+      })
+      .then((res) => {
+        const parsed = parseCsv(res.data);
+        setData(parsed);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [sheetId]);
 
   return { data, loading };
