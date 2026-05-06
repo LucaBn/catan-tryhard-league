@@ -20,27 +20,7 @@ import Header from "@/components/Header";
 import Leaderboard from "@/components/Leaderboard";
 import Players from "@/components/Players";
 import { useSheetsData } from "@/hooks/useSheetsData";
-
-const STORAGE_KEY = "catan-sheet-ids";
-
-const getStoredIds = (): string[] => {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  } catch {
-    return [];
-  }
-};
-
-const saveId = (id: string) => {
-  const current = getStoredIds();
-  const updated = [id, ...current.filter((x) => x !== id)].slice(0, 5);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-};
-
-const removeId = (id: string) => {
-  const updated = getStoredIds().filter((x) => x !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-};
+import { getStoredIds, removeId, saveId } from "@/utils/handleSheetIds";
 
 export default function App() {
   const params = new URLSearchParams(window.location.search);
@@ -48,9 +28,9 @@ export default function App() {
 
   const { data, loading, error } = useSheetsData(sheetId);
 
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState<string>("");
   const [recentIds, setRecentIds] = useState<string[]>(getStoredIds());
-  const [loadingId, setLoadingId] = useState(false);
+  const [loadingId, setLoadingId] = useState<boolean>(false);
 
   const isValid = /^[a-zA-Z0-9-_]{20,}$/.test(input);
 
@@ -86,12 +66,6 @@ export default function App() {
     return (
       <Container size="lg" pt={70}>
         <Header />
-
-        {error && (
-          <Alert color="red" title="Error loading sheet" mb="md">
-            {error}
-          </Alert>
-        )}
 
         <Flex gap={16} direction="column">
           <Leaderboard data={data} />
