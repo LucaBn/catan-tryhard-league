@@ -45,8 +45,8 @@ export default function Header() {
             checked={isThemeSwitchChecked}
             onChange={() => toggleColorScheme()}
             color="dark"
-            onLabel={<IconSun size={16} />}
-            offLabel={<IconMoon size={16} />}
+            onLabel={<IconMoon size={16} />}
+            offLabel={<IconSun size={16} />}
           />
         </Tooltip>
       </Group>

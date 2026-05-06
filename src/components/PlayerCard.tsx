@@ -1,9 +1,20 @@
+import { useRef } from "react";
 import { LineChart } from "@mantine/charts";
-import { Avatar, Badge, Box, Card, Divider, Group, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Avatar,
+  Badge,
+  Box,
+  Card,
+  Divider,
+  Group,
+  Text,
+} from "@mantine/core";
+import { IconDownload } from "@tabler/icons-react";
+import { toPng } from "html-to-image";
 
+import { GameRecord } from "@/types";
 import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
-
-import { GameRecord } from "../types";
 
 type Props = {
   player: string;
@@ -12,6 +23,8 @@ type Props = {
 };
 
 export default function PlayerCard({ player, data, sorting }: Props) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
   const games = data.filter((d) => d.player === player);
 
   const wins = games.filter((g) => g.points >= 10).length;
@@ -73,15 +86,47 @@ export default function PlayerCard({ player, data, sorting }: Props) {
   gameMap.forEach((players) => {
     const sorted = [...players].sort((a, b) => b.points - a.points);
 
-    const index = sorted.findIndex((p) => p.player === player);
+    const current = sorted.find((p) => p.player === player);
 
-    if (index === 0) gold++;
-    else if (index === 1) silver++;
-    else if (index === 2) bronze++;
+    if (!current) return;
+
+    const uniqueScores = [...new Set(sorted.map((p) => p.points))];
+
+    const rank = uniqueScores.indexOf(current.points);
+
+    if (rank === 0) gold++;
+    else if (rank === 1) silver++;
+    else if (rank === 2) bronze++;
   });
 
+  const handleExport = async () => {
+    if (!cardRef.current) return;
+
+    try {
+      const dataUrl = await toPng(cardRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        // skipFonts: true, // This causes issues with text rendering, so it's better to include fonts
+        canvasWidth: cardRef.current.scrollWidth,
+        canvasHeight: cardRef.current.scrollHeight,
+        filter: (node) => {
+          return !(node instanceof HTMLButtonElement);
+        },
+      });
+
+      const link = document.createElement("a");
+
+      link.download = `${player}.png`;
+      link.href = dataUrl;
+
+      link.click();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <Card shadow="sm" padding="md" radius="md" withBorder>
+    <Card shadow="sm" padding="md" radius="md" withBorder ref={cardRef}>
       <Group align="center" gap="md">
         <Avatar radius="xl" size="lg" color={color}>
           {initial}
@@ -91,11 +136,6 @@ export default function PlayerCard({ player, data, sorting }: Props) {
           <Text fw={700} size="lg">
             {player}
           </Text>
-
-          {/* <Text size="xs" c="dimmed">
-            Description about {player} goes here. Maybe their playstyle or
-            favorite strategies.
-          </Text> */}
         </Group>
 
         <Group gap="xs">
@@ -120,9 +160,6 @@ export default function PlayerCard({ player, data, sorting }: Props) {
             <Badge variant={sorting === "games" ? "filled" : "outline"}>
               Games: {games.length}
             </Badge>
-            {/* <Badge variant={sorting === "wins" ? "filled" : "outline"}>
-              Wins 👑: {wins}
-            </Badge> */}
             <Badge variant={sorting === "total" ? "filled" : "outline"}>
               Total pts: {total}
             </Badge>
@@ -183,6 +220,17 @@ export default function PlayerCard({ player, data, sorting }: Props) {
             </Box>
           </Group>
         )}
+      </Group>
+
+      <Group justify="flex-end" mt="md">
+        <ActionIcon
+          variant="light"
+          size="lg"
+          onClick={handleExport}
+          title="Save an image of this card"
+        >
+          <IconDownload size={18} />
+        </ActionIcon>
       </Group>
     </Card>
   );
