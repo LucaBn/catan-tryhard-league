@@ -1,9 +1,8 @@
 import { useMemo, useState } from "react";
 import { Group, Select, SimpleGrid, Text, Title } from "@mantine/core";
 
+import PlayerCard from "@/components/PlayerCard";
 import { GameRecord } from "@/types";
-
-import PlayerCard from "./PlayerCard";
 
 type Props = {
   data: GameRecord[];

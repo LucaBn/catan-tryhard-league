@@ -71,7 +71,7 @@
 [array-find-index@1.0.2](https://github.com/sindresorhus/array-find-index) - MIT
 [asap@2.0.6](https://github.com/kriskowal/asap) - MIT
 [asynckit@0.4.0](https://github.com/alexindigo/asynckit) - MIT
-[axios@1.15.0](https://github.com/axios/axios) - MIT
+[axios@1.16.0](https://github.com/axios/axios) - MIT
 [balanced-match@1.0.2](https://github.com/juliangruber/balanced-match) - MIT
 [balanced-match@4.0.4](https://github.com/juliangruber/balanced-match) - MIT
 [brace-expansion@1.1.14](https://github.com/juliangruber/brace-expansion) - MIT
@@ -143,7 +143,7 @@
 [find-up@5.0.0](https://github.com/sindresorhus/find-up) - MIT
 [flat-cache@4.0.1](https://github.com/jaredwray/flat-cache) - MIT
 [flatted@3.4.2](https://github.com/WebReflection/flatted) - ISC
-[follow-redirects@1.15.11](https://github.com/follow-redirects/follow-redirects) - MIT
+[follow-redirects@1.16.0](https://github.com/follow-redirects/follow-redirects) - MIT
 [form-data@4.0.5](https://github.com/form-data/form-data) - MIT
 [fs.realpath@1.0.0](https://github.com/isaacs/fs.realpath) - ISC
 [function-bind@1.1.2](https://github.com/Raynos/function-bind) - MIT
@@ -161,6 +161,7 @@
 [has-tostringtag@1.0.2](https://github.com/inspect-js/has-tostringtag) - MIT
 [hasown@2.0.2](https://github.com/inspect-js/hasOwn) - MIT
 [hosted-git-info@2.8.9](https://github.com/npm/hosted-git-info) - ISC
+[html-to-image@1.11.13](https://github.com/bubkoo/html-to-image) - MIT
 [ignore@5.3.2](https://github.com/kaelzhang/node-ignore) - MIT
 [ignore@7.0.5](https://github.com/kaelzhang/node-ignore) - MIT
 [immer@10.2.0](https://github.com/immerjs/immer) - MIT
@@ -215,7 +216,7 @@
 [path-parse@1.0.7](https://github.com/jbgutierrez/path-parse) - MIT
 [picocolors@1.1.1](https://github.com/alexeyraspopov/picocolors) - ISC
 [picomatch@4.0.4](https://github.com/micromatch/picomatch) - MIT
-[postcss@8.5.9](https://github.com/postcss/postcss) - MIT
+[postcss@8.5.14](https://github.com/postcss/postcss) - MIT
 [prelude-ls@1.2.1](https://github.com/gkz/prelude-ls) - MIT
 [proxy-from-env@2.1.0](https://github.com/Rob--W/proxy-from-env) - MIT
 [punycode@2.3.1](https://github.com/mathiasbynens/punycode.js) - MIT
