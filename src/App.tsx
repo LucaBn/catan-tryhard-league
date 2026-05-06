@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
+  Alert,
+  Badge,
   Button,
   Center,
   Container,
@@ -19,94 +21,176 @@ import Leaderboard from "@/components/Leaderboard";
 import Players from "@/components/Players";
 import { useSheetsData } from "@/hooks/useSheetsData";
 
-const colorList = ["blue", "green", "red", "purple"];
+const STORAGE_KEY = "catan-sheet-ids";
+
+const getStoredIds = (): string[] => {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  } catch {
+    return [];
+  }
+};
+
+const saveId = (id: string) => {
+  const current = getStoredIds();
+  const updated = [id, ...current.filter((x) => x !== id)].slice(0, 5);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+};
+
+const removeId = (id: string) => {
+  const updated = getStoredIds().filter((x) => x !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+};
 
 export default function App() {
   const params = new URLSearchParams(window.location.search);
   const sheetId = params.get("id") || undefined;
 
-  const { data, loading } = useSheetsData(sheetId);
+  const { data, loading, error } = useSheetsData(sheetId);
 
-  const [input, setInput] = useState<string>("");
+  const [input, setInput] = useState("");
+  const [recentIds, setRecentIds] = useState<string[]>(getStoredIds());
+  const [loadingId, setLoadingId] = useState(false);
 
   const isValid = /^[a-zA-Z0-9-_]{20,}$/.test(input);
 
-  if (!sheetId) {
+  useEffect(() => {
+    if (!sheetId) return;
+
+    if (!loading && !error && data.length >= 0) {
+      saveId(sheetId);
+      setRecentIds(getStoredIds());
+      setLoadingId(false);
+    }
+  }, [sheetId, loading, error, data]);
+
+  const handleRemove = (id: string) => {
+    removeId(id);
+    setRecentIds(getStoredIds());
+  };
+
+  const handleLoad = () => {
+    setLoadingId(true);
+    window.location.search = `?id=${input}`;
+  };
+
+  if (sheetId && loading) {
     return (
       <Center h="100vh">
-        <Flex direction="column" gap="xs" maw={500} w="100%">
-          <Header />
-
-          <Text size="sm">Paste your Google Sheets ID</Text>
-
-          <TextInput
-            placeholder="Paste your Google Sheets ID"
-            value={input}
-            onChange={(e) => setInput(e.currentTarget.value)}
-            mb={15}
-          />
-
-          <Button
-            disabled={!isValid}
-            onClick={() => {
-              window.location.search = `?id=${input}`;
-            }}
-          >
-            Load
-          </Button>
-
-          <Divider my="sm" />
-
-          <Text fw={600} size="xl">
-            Don't have a Google Sheets ID?
-          </Text>
-          <Flex direction="column" gap={4}>
-            <List type="ordered">
-              <List.Item>
-                Download the example template from{" "}
-                <a
-                  href="https://docs.google.com/spreadsheets/d/1DrXpjuFCPClz4YB0PTb5zDlS_4__t03xxqlHKz4XVg8"
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                >
-                  here
-                </a>
-              </List.Item>
-              <List.Item>Make a copy to your Drive</List.Item>
-              <List.Item>Update your game results</List.Item>
-              <List.Item>Copy the sheet ID from the URL</List.Item>
-              <List.Item>Open the app and paste your ID above</List.Item>
-            </List>
-          </Flex>
-        </Flex>
+        <Loader type="dots" size="xl" />
       </Center>
     );
   }
 
-  const randomColor = colorList[Math.floor(Math.random() * colorList.length)];
-
-  if (loading) {
+  if (sheetId && !error) {
     return (
-      <Center h="100vh">
-        <Loader type="dots" size="xl" color={randomColor} />
-      </Center>
+      <Container size="lg" pt={70}>
+        <Header />
+
+        {error && (
+          <Alert color="red" title="Error loading sheet" mb="md">
+            {error}
+          </Alert>
+        )}
+
+        <Flex gap={16} direction="column">
+          <Leaderboard data={data} />
+          <GamesTable data={data} />
+          <Players data={data} />
+          <FanFacts data={data} />
+        </Flex>
+
+        <Divider my="md" />
+
+        <Footer />
+      </Container>
     );
   }
 
   return (
-    <Container size="lg" pt={70}>
-      <Header />
+    <Center h="100vh">
+      <Flex direction="column" gap="xs" maw={500} w="100%">
+        <Header />
 
-      <Flex gap={16} direction="column">
-        <Leaderboard data={data} />
-        <GamesTable data={data} />
-        <Players data={data} />
-        <FanFacts data={data} />
+        <Text>Paste your Google Sheets ID</Text>
+
+        <TextInput
+          placeholder="Paste your Google Sheets ID"
+          value={input}
+          onChange={(e) => setInput(e.currentTarget.value)}
+          mb={10}
+        />
+
+        <Button disabled={!isValid || loadingId} onClick={handleLoad}>
+          {loadingId ? "Loading..." : "Load"}
+        </Button>
+
+        {error && (
+          <Alert color="red" title="Loading failed" mt={10}>
+            Invalid or inaccessible sheet
+          </Alert>
+        )}
+
+        {recentIds.length > 0 && (
+          <Text size="sm" mt={15}>
+            Recently used IDs
+          </Text>
+        )}
+
+        <Flex direction="column" gap={6}>
+          {recentIds.map((id) => (
+            <Badge
+              key={id}
+              size="lg"
+              style={{ cursor: "pointer", textTransform: "none" }}
+              rightSection={
+                <Text
+                  size="md"
+                  style={{ cursor: "pointer" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRemove(id);
+                  }}
+                  ms={5}
+                >
+                  ✕
+                </Text>
+              }
+              onClick={() => {
+                window.location.search = `?id=${id}`;
+              }}
+              variant="gradient"
+            >
+              {id}
+            </Badge>
+          ))}
+        </Flex>
+
+        <Divider my="sm" />
+
+        <Text fw={600} size="xl">
+          Don't have a Google Sheets ID?
+        </Text>
+
+        <Flex direction="column" gap={4}>
+          <List type="ordered">
+            <List.Item>
+              Download the example template from{" "}
+              <a
+                href="https://docs.google.com/spreadsheets/d/1DrXpjuFCPClz4YB0PTb5zDlS_4__t03xxqlHKz4XVg8"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                here
+              </a>
+            </List.Item>
+            <List.Item>Make a copy to your Drive</List.Item>
+            <List.Item>Update your game results</List.Item>
+            <List.Item>Copy the sheet ID from the URL</List.Item>
+            <List.Item>Open the app and paste your ID above</List.Item>
+          </List>
+        </Flex>
       </Flex>
-
-      <Divider my="md" />
-
-      <Footer />
-    </Container>
+    </Center>
   );
 }
