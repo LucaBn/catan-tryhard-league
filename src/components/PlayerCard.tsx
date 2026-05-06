@@ -73,11 +73,17 @@ export default function PlayerCard({ player, data, sorting }: Props) {
   gameMap.forEach((players) => {
     const sorted = [...players].sort((a, b) => b.points - a.points);
 
-    const index = sorted.findIndex((p) => p.player === player);
+    const current = sorted.find((p) => p.player === player);
 
-    if (index === 0) gold++;
-    else if (index === 1) silver++;
-    else if (index === 2) bronze++;
+    if (!current) return;
+
+    const uniqueScores = [...new Set(sorted.map((p) => p.points))];
+
+    const rank = uniqueScores.indexOf(current.points);
+
+    if (rank === 0) gold++;
+    else if (rank === 1) silver++;
+    else if (rank === 2) bronze++;
   });
 
   return (
