@@ -1,14 +1,5 @@
 import { LineChart } from "@mantine/charts";
-import {
-  Avatar,
-  Badge,
-  Box,
-  Card,
-  Divider,
-  Group,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Avatar, Badge, Box, Card, Divider, Group, Text } from "@mantine/core";
 
 import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
 
@@ -96,7 +87,7 @@ export default function PlayerCard({ player, data, sorting }: Props) {
           {initial}
         </Avatar>
 
-        <Stack gap={0} style={{ flex: 1 }}>
+        <Group gap={0} style={{ flex: 1 }}>
           <Text fw={700} size="lg">
             {player}
           </Text>
@@ -105,7 +96,7 @@ export default function PlayerCard({ player, data, sorting }: Props) {
             Description about {player} goes here. Maybe their playstyle or
             favorite strategies.
           </Text> */}
-        </Stack>
+        </Group>
 
         <Group gap="xs">
           <Badge
