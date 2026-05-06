@@ -30,12 +30,11 @@ export default function Header() {
         <Title
           order={3}
           onClick={() =>
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            })
+            window.location.search !== "" && (window.location.search = "")
           }
-          style={{ cursor: "pointer" }}
+          style={
+            window.location.search !== "" ? { cursor: "pointer" } : undefined
+          }
         >
           🏝️ Catan Tryhard League
         </Title>

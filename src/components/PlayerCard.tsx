@@ -1,13 +1,5 @@
-import { Sparkline } from "@mantine/charts";
-import {
-  Avatar,
-  Badge,
-  Card,
-  Divider,
-  Group,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { LineChart } from "@mantine/charts";
+import { Avatar, Badge, Box, Card, Divider, Group, Text } from "@mantine/core";
 
 import { getColorFromPlayerName } from "@/utils/getColorFromPlayerName";
 
@@ -67,6 +59,27 @@ export default function PlayerCard({ player, data, sorting }: Props) {
     };
   });
 
+  const gameMap = new Map<number, GameRecord[]>();
+
+  data.forEach((g) => {
+    if (!gameMap.has(g.game)) gameMap.set(g.game, []);
+    gameMap.get(g.game)!.push(g);
+  });
+
+  let gold = 0;
+  let silver = 0;
+  let bronze = 0;
+
+  gameMap.forEach((players) => {
+    const sorted = [...players].sort((a, b) => b.points - a.points);
+
+    const index = sorted.findIndex((p) => p.player === player);
+
+    if (index === 0) gold++;
+    else if (index === 1) silver++;
+    else if (index === 2) bronze++;
+  });
+
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder>
       <Group align="center" gap="md">
@@ -74,25 +87,42 @@ export default function PlayerCard({ player, data, sorting }: Props) {
           {initial}
         </Avatar>
 
-        <Stack gap={0} style={{ flex: 1 }}>
+        <Group gap={0} style={{ flex: 1 }}>
           <Text fw={700} size="lg">
             {player}
           </Text>
 
-          <Text size="xs" c="dimmed">
+          {/* <Text size="xs" c="dimmed">
             Description about {player} goes here. Maybe their playstyle or
             favorite strategies.
-          </Text>
-        </Stack>
+          </Text> */}
+        </Group>
+
+        <Group gap="xs">
+          <Badge
+            color="yellow"
+            variant={sorting === "wins" ? "filled" : "light"}
+          >
+            👑 {gold}
+          </Badge>
+
+          <Badge color="gray" variant="light">
+            🥈 {silver}
+          </Badge>
+
+          <Badge color="orange" variant="light">
+            🥉 {bronze}
+          </Badge>
+        </Group>
 
         <Group gap="xs">
           <Group gap="xs">
             <Badge variant={sorting === "games" ? "filled" : "outline"}>
               Games: {games.length}
             </Badge>
-            <Badge variant={sorting === "wins" ? "filled" : "outline"}>
+            {/* <Badge variant={sorting === "wins" ? "filled" : "outline"}>
               Wins 👑: {wins}
-            </Badge>
+            </Badge> */}
             <Badge variant={sorting === "total" ? "filled" : "outline"}>
               Total pts: {total}
             </Badge>
@@ -122,21 +152,35 @@ export default function PlayerCard({ player, data, sorting }: Props) {
         </Group>
 
         {games.length > 1 && (
-          <Group gap={0} align="center">
-            <Sparkline
-              w={200}
-              h={60}
-              data={chartData}
-              curveType="linear"
-              color={color}
-              fillOpacity={0.6}
-              strokeWidth={2}
-              p={0}
-            />
-            <Text size="xs" c="dimmed" mt={4}>
-              Last {chartData.length < 10 ? chartData.length : 10} games
-              performance
+          <Group w="100%">
+            <Text size="xs" c="dimmed" w="100%">
+              Last {Math.min(chartData.length, 10)} games
             </Text>
+            <Box style={{ width: "100%", minWidth: 0 }}>
+              <LineChart
+                h={120}
+                data={chartData.map((points) => ({
+                  points,
+                }))}
+                dataKey="points"
+                series={[{ name: "points", color }]}
+                withTooltip={false}
+                withXAxis={false}
+                withYAxis={false}
+                withPointLabels={true}
+                gridAxis="x"
+                yAxisProps={{
+                  domain: [2, 12],
+                  tickCount: 6,
+                  tickFormatter: (value) => {
+                    return value === 10 ? "" : ""; // Can't say why but if I use this it show horizontal lines correctly 🤷‍♂️
+                  },
+                }}
+                valueFormatter={(value) =>
+                  value >= 10 ? `${value} 👑` : `${value}`
+                }
+              />
+            </Box>
           </Group>
         )}
       </Group>
