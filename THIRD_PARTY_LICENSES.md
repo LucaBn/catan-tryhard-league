@@ -102,7 +102,6 @@
 [d3-time-format@4.1.0](https://github.com/d3/d3-time-format) - ISC
 [d3-time@3.1.0](https://github.com/d3/d3-time) - ISC
 [d3-timer@3.0.1](https://github.com/d3/d3-timer) - ISC
-[dayjs@1.11.20](https://github.com/iamkun/dayjs) - MIT
 [debug@3.2.7](https://github.com/visionmedia/debug) - MIT
 [debug@4.4.3](https://github.com/debug-js/debug) - MIT
 [debuglog@1.0.1](https://github.com/sam-github/node-debuglog) - MIT

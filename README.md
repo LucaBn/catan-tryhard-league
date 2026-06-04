@@ -54,8 +54,6 @@ Notes
 - React (Vite)
 - Mantine UI
 - Mantine Charts
-- Axios
-- Day.js
 
 ## 📦 Installation
 
