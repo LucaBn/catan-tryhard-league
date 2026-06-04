@@ -15,7 +15,7 @@ import {
 
 import FanFacts from "@/components/FanFacts";
 import Footer from "@/components/Footer";
-import GamesTable from "@/components/GamesTable";
+import Games from "@/components/Games";
 import Header from "@/components/Header";
 import Leaderboard from "@/components/Leaderboard";
 import Players from "@/components/Players";
@@ -69,7 +69,7 @@ export default function App() {
 
         <Flex gap={16} direction="column">
           <Leaderboard data={data} />
-          <GamesTable data={data} />
+          <Games data={data} />
           <Players data={data} />
           <FanFacts data={data} />
         </Flex>

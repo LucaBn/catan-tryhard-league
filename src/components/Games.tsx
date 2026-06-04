@@ -26,7 +26,7 @@ type GameSummary = {
   winner: string;
 };
 
-export default function GamesTable({ data }: Props) {
+export default function Games({ data }: Props) {
   const allPlayers = useMemo(() => {
     return Array.from(new Set(data.map((d) => d.player)));
   }, [data]);
@@ -123,7 +123,8 @@ export default function GamesTable({ data }: Props) {
               <Accordion.Control>
                 <Group justify="space-between" w="100%">
                   <Text size="sm" c="dimmed">
-                    #{g.game} - {new Date(g.date).toLocaleDateString("it-IT")} -{" "}
+                    #{g.game} -{" "}
+                    {new Date(g.date).toLocaleDateString(navigator.language)} -{" "}
                     {g.players.length} players
                   </Text>
 

@@ -4,6 +4,7 @@ import { type GameRecord } from "@/types";
 import { parseCsv } from "@/utils/parseCsv";
 
 const buildWorkerUrl = (sheetId: string) => {
+  // Should move to env file, but for now it's fine to hardcode
   const workerProtocol = "https";
   const workerSubdomain = "ctl";
   const workerAccount = "lucabn";
