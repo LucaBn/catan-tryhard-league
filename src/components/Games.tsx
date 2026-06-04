@@ -26,7 +26,7 @@ type GameSummary = {
   winner: string;
 };
 
-export default function GamesTable({ data }: Props) {
+export default function Games({ data }: Props) {
   const allPlayers = useMemo(() => {
     return Array.from(new Set(data.map((d) => d.player)));
   }, [data]);
