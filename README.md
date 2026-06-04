@@ -38,7 +38,7 @@ https://docs.google.com/spreadsheets/d/1DrXpjuFCPClz4YB0PTb5zDlS_4__t03xxqlHKz4X
 
 Steps:
 
-1. Make a copy to your Drive
+1. Make a copy of the spreadsheet in your Google Drive
 2. Update your game results
 3. Copy the sheet ID from the URL
 4. Open the app and use your ID when required
