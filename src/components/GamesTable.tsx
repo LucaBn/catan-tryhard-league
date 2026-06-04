@@ -123,7 +123,8 @@ export default function GamesTable({ data }: Props) {
               <Accordion.Control>
                 <Group justify="space-between" w="100%">
                   <Text size="sm" c="dimmed">
-                    #{g.game} - {new Date(g.date).toLocaleDateString("it-IT")} -{" "}
+                    #{g.game} -{" "}
+                    {new Date(g.date).toLocaleDateString(navigator.language)} -{" "}
                     {g.players.length} players
                   </Text>
 
