@@ -70,7 +70,7 @@ export default function FanFacts({ data }: Props) {
     const maxRatio = Math.max(...highScoreByPlayer.map((p) => p.ratio));
 
     if (maxRatio > 0.5) {
-      const top = highScoreByPlayer.filter((p) => p.ratio === maxRatio);
+      const top = highScoreByPlayer.filter((p) => p.ratio > 0.5);
       const names = formatList(top.map((p) => p.player));
 
       results.push(`💪 ${names} scored 8+ points in most of their games`);
