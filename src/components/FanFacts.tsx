@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Fragment, ReactNode, useMemo } from "react";
 import { Paper, Stack, Text, Title } from "@mantine/core";
 
 import { GameRecord } from "@/types";
@@ -8,9 +8,43 @@ type Props = {
 };
 
 const formatList = (elements: string[]) => {
-  if (elements.length === 1) return elements[0];
-  if (elements.length === 2) return `${elements[0]} and ${elements[1]}`;
-  return `${elements.slice(0, -1).join(", ")} and ${elements.slice(-1)}`;
+  if (elements.length === 1) {
+    return (
+      <Text span fw={700} ms={4}>
+        {elements[0]}
+      </Text>
+    );
+  }
+
+  if (elements.length === 2) {
+    return (
+      <>
+        <Text span fw={700} ms={4}>
+          {elements[0]}
+        </Text>{" "}
+        and{" "}
+        <Text span fw={700}>
+          {elements[1]}
+        </Text>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {elements.slice(0, -1).map((element, i) => (
+        <Fragment key={element}>
+          <Text span fw={700} ms={4}>
+            {element}
+          </Text>
+          {i < elements.length - 2 ? ", " : " and "}
+        </Fragment>
+      ))}
+      <Text span fw={700}>
+        {elements[elements.length - 1]}
+      </Text>
+    </>
+  );
 };
 
 export default function FanFacts({ data }: Props) {
@@ -22,7 +56,7 @@ export default function FanFacts({ data }: Props) {
       byPlayer[g.player].push(g);
     });
 
-    const results: string[] = [];
+    const results: ReactNode[] = [];
 
     const streakByPlayer = Object.entries(byPlayer).map(([player, games]) => {
       const sorted = [...games].sort(
@@ -53,7 +87,11 @@ export default function FanFacts({ data }: Props) {
       const top = streakByPlayer.filter((p) => p.maxStreak === maxStreak);
       const names = formatList(top.map((p) => p.player));
 
-      results.push(`🔥 ${names} won ${maxStreak} games in a row`);
+      results.push(
+        <>
+          🔥 {names} won {maxStreak} games in a row
+        </>,
+      );
     }
 
     const highScoreByPlayer = Object.entries(byPlayer).map(
@@ -73,7 +111,7 @@ export default function FanFacts({ data }: Props) {
       const top = highScoreByPlayer.filter((p) => p.ratio > 0.5);
       const names = formatList(top.map((p) => p.player));
 
-      results.push(`💪 ${names} scored 8+ points in most of their games`);
+      results.push(<>💪 {names} scored 8+ points in most of their games</>);
     }
 
     const over10ByPlayer = Object.entries(byPlayer).map(([player, games]) => {
@@ -92,7 +130,11 @@ export default function FanFacts({ data }: Props) {
       const names = formatList(top.map((p) => p.player));
       const times = maxOver10 === 1 ? "once" : `${maxOver10} times`;
 
-      results.push(`🚀 ${names} broke the 10-point ceiling ${times}`);
+      results.push(
+        <>
+          🚀 {names} broke the 10-point ceiling {times}
+        </>,
+      );
     }
 
     const almostByPlayer = Object.entries(byPlayer).map(([player, games]) => {
@@ -107,7 +149,11 @@ export default function FanFacts({ data }: Props) {
       const names = formatList(top.map((p) => p.player));
       const times = maxAlmost === 1 ? "once" : `${maxAlmost} times`;
 
-      results.push(`😬 ${names} stopped at 9 points ${times}`);
+      results.push(
+        <>
+          😬 {names} stopped at 9 points {times}
+        </>,
+      );
     }
 
     return results;
@@ -123,8 +169,6 @@ export default function FanFacts({ data }: Props) {
 
       <Stack gap="sm">
         {facts.map((fact, i) => {
-          const icon = fact.split(" ")[0];
-
           return (
             <Paper
               key={i}
@@ -137,12 +181,8 @@ export default function FanFacts({ data }: Props) {
                 gap: 12,
               }}
             >
-              <Text size="lg" style={{ width: 20 }}>
-                {icon}
-              </Text>
-
               <Text size="sm" style={{ lineHeight: 1.4 }}>
-                {fact.replace(icon + " ", "")}
+                {fact}
               </Text>
             </Paper>
           );
